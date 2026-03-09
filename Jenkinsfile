@@ -1,13 +1,13 @@
 pipeline{
     agent any
 
-    // environment {
-    //     SONAR_PROJECT_KEY = 'bepecllmops'
-	// 	SONAR_SCANNER_HOME = tool 'sonarqube-scanner'
+     environment {
+        SONAR_PROJECT_KEY = 'LLMOPs'
+	 	SONAR_SCANNER_HOME = tool 'sonarqube_scanner'
     //     AWS_REGION = 'ap-south-1'
     //     ECR_REPO = 'llmops-ecr'
     //     IMAGE_TAG = 'latest'
-	// }
+	 }
 
     stages{
         stage('Cloning Github repo to Jenkins'){
@@ -19,22 +19,22 @@ pipeline{
             }
         }
 
-    // stage('SonarQube Analysis'){
-	// 		steps {
-	// 			withCredentials([string(credentialsId: 'sonarqube-token', variable: 'SONAR_TOKEN')]) {
-    					
-	// 				withSonarQubeEnv('sonar-env') {
-    // 						sh """
-	// 					${SONAR_SCANNER_HOME}/bin/sonar-scanner \
-	// 					-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-	// 					-Dsonar.sources=. \
-	// 					-Dsonar.host.url=http://sonarqube-bepec:9000 \
-	// 					-Dsonar.login=${SONAR_TOKEN}
-	// 					"""
-	// 				}
-	// 			}
-	// 		}
-	// 	}
+        stage('SonarQube Analysis'){
+        		steps {
+        			withCredentials([string(credentialsId: 'sonarqube_token', variable: 'SONAR_TOKEN')]) {
+                            
+        				withSonarQubeEnv('sonar_env') {
+        						sh """
+        					${SONAR_SCANNER_HOME}/bin/sonar-scanner \
+        					-Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+        					-Dsonar.sources=. \
+        					-Dsonar.host.url=http://sonarqube-jin:9000 \
+        					-Dsonar.login=${SONAR_TOKEN}
+        					"""
+        				}
+        			}
+        		}
+        	}
 
     // stage('Build and Push Docker Image to ECR') {
     //         steps {
