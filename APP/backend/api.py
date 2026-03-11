@@ -36,7 +36,7 @@ def chat_endpoint(request:RequestState):
         return {"response" : response}
     
     except Exception as e:
-        logger.error("Some error ocuured during reponse generation")
+        logger.exception("Error during response generation")
         raise HTTPException(
             status_code=500 , 
             detail=str(CustomException("Failed to get AI response" , error_detail=e))
