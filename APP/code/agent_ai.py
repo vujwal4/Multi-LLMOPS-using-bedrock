@@ -23,7 +23,6 @@ def get_response_from_ai_agents(query, allow_search, system_prompt):
     agent = create_react_agent(
         model=llm,
         tools=tools,
-        #state_modifier=system_prompt
     )
     
     # Ensure query is passed as a message list
