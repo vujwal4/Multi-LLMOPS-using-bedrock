@@ -5,6 +5,7 @@ langchain-groq
 langchain-community
 python-dotenv
 botocore
+boto3
 uvicorn
 fastapi
 pydantic
