@@ -26,7 +26,6 @@ def chat_endpoint(request:RequestState):
     
     try:
         response = get_response_from_ai_agents(
-            request.model_name,
             request.messages,
             request.allow_search,
             request.system_prompt

@@ -9,7 +9,7 @@ LOG_FILE= os.path.join(LOGS_DIR, f"log_{datetime.now().strftime('%Y-%m-%d')}.log
 
 logging.basicConfig(
     filename=LOG_FILE,
-    format='%(asctime)s %(levelname)s - %(message)s',
+    format="%(asctime)s | %(levelname)s | %(name)s | %(filename)s:%(lineno)d | %(message)s",
     level=logging.INFO
 )
 

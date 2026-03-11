@@ -1,4 +1,4 @@
-'''from langchain_aws import ChatBedrock
+from langchain_aws import ChatBedrock
 from langchain_tavily import TavilySearch
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages.ai import AIMessage
@@ -14,7 +14,7 @@ def RAG_llm():
         }
     )
 
-def get_response_from_ai_agents(model_name,query, allow_search, system_prompt):
+def get_response_from_ai_agents(query, allow_search, system_prompt):
     # ChatGroq removed; using Nova-Lite via Bedrock directly
     llm = RAG_llm()
     
@@ -34,8 +34,7 @@ def get_response_from_ai_agents(model_name,query, allow_search, system_prompt):
     ai_messages = [message.content for message in messages if isinstance(message, AIMessage)]
     
     return ai_messages[-1] 
-'''
-import botocore
+'''import botocore
 from langchain_aws import ChatBedrock
 from langchain_tavily import TavilySearch
 from langgraph.prebuilt import create_react_agent
@@ -81,4 +80,4 @@ def get_response_from_ai_agents(model_name, messages, allow_search, system_promp
     ai_messages = [m.content for m in messages_out if isinstance(m, AIMessage)]
     
     return ai_messages[-1] if ai_messages else "No response generated."
-
+'''
