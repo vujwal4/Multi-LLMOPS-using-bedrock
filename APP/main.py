@@ -20,7 +20,7 @@ def run_backend():
 def run_frontend():
     try:
         logger.info("Starting Frontend service")
-        subprocess.Popen(["streamlit","run","APP/frontend/ui.py","--server.address","0.0.0.0","--server.port","8501"],check = True)
+        subprocess.run(["streamlit" , "run" , "APP/frontend/ui.py"],check=True)
 
     except CustomException as e:
         logger.error("Problem with frontend service")
