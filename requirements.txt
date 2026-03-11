@@ -4,6 +4,7 @@ langchain-tavily
 langchain-groq
 langchain-community
 python-dotenv
+botocore
 uvicorn
 fastapi
 pydantic
