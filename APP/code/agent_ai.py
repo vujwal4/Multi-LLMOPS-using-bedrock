@@ -45,29 +45,3 @@ def get_response_from_ai_agents(query, allow_search, system_prompt):
     ]
 
     return ai_messages[-1] if ai_messages else "No response generated"
-'''def get_response_from_ai_agents(query, allow_search, system_prompt):
-    # ChatGroq removed; using Nova-Lite via Bedrock directly
-    llm = RAG_llm()
-    
-    tools = [TavilySearch(max_results=2)] if allow_search else []
-    
-    agent = create_react_agent(
-        model=llm,
-        tools=tools,
-        #
-    )
-    
-    # Ensure query is passed as a message list
-    state = {
-        "messages": [
-            ("system", system_prompt),
-            ("user", query[-1])
-        ]
-    }
-    response = agent.invoke(state)
-    
-    messages = response.get("messages")
-    ai_messages = [message.content for message in messages if isinstance(message, AIMessage)]
-    
-    return ai_messages[-1] 
-'''
