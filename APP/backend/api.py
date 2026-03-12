@@ -40,5 +40,5 @@ def chat_endpoint(request:RequestState):
         raise HTTPException(
             status_code=500 , 
             detail=str(CustomException("Failed to get AI response" , error_detail=e))
-            )
+        )
         
