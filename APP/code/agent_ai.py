@@ -26,7 +26,12 @@ def get_response_from_ai_agents(query, allow_search, system_prompt):
     )
     
     # Ensure query is passed as a message list
-    state = {"messages": [("user", query)]}
+    state = {
+        "messages": [
+            ("system", system_prompt),
+            ("user", query[-1])
+        ]
+    }
     response = agent.invoke(state)
     
     messages = response.get("messages")
