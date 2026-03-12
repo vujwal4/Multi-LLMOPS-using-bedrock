@@ -11,7 +11,7 @@ logger = get_logger(__name__)
 app = FastAPI(title="MULTI AI AGENT")
 
 class RequestState(BaseModel):
-    #model_name:str
+    model_name:str
     system_prompt:str
     messages:List[str]
     allow_search: bool
