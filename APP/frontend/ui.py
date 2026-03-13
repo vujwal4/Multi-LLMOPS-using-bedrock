@@ -57,7 +57,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 system_prompt = st.text_area("Define your AI Agent:", height=70)
-st.info("🤖 **Model using:** amazon.nova-lite-v1:0 from Amazon Bedrock")
+st.info("🤖 Model using: amazon.nova-lite-v1:0 from Amazon Bedrock")
 selected_model = "amazon.nova-lite-v1:0" 
 
 allow_web_search = st.checkbox("Allow web search")
