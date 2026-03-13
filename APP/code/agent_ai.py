@@ -1,11 +1,13 @@
 from langchain_aws import ChatBedrock
+from APP.config.settings import settings
+import os
 from langchain_tavily import TavilySearch
 from langgraph.prebuilt import create_react_agent
 from langchain_core.messages.ai import AIMessage
-
+#os.environ["TAVILY_API_KEY"] = settings.TAVILY_API_KEY
 def RAG_llm(): 
     return ChatBedrock(
-        credentials_profile_name="default", 
+        #credentials_profile_name="default", 
         model_id="amazon.nova-lite-v1:0", 
         model_kwargs={
             "temperature": 0.3, 
@@ -19,7 +21,8 @@ def get_response_from_ai_agents(query, allow_search, system_prompt):
     llm = RAG_llm()
 
     tools = [TavilySearch(max_results=2)] if allow_search else []
-
+    tools = [TavilySearch(api_key=settings.TAVILY_API_KEY, max_results=2)] if allow_search else []
+    
     agent = create_react_agent(
         model=llm,
         tools=tools,
