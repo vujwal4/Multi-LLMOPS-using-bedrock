@@ -7,7 +7,7 @@ from langchain_core.messages.ai import AIMessage
 #os.environ["TAVILY_API_KEY"] = settings.TAVILY_API_KEY
 def RAG_llm(model_name):
     return ChatBedrock(
-        credentials_profile_name="default",
+        #credentials_profile_name="default",
         model_id=model_name,
         model_kwargs={
             "temperature": 0.3,
