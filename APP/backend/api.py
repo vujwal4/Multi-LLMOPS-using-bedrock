@@ -54,10 +54,20 @@ async def chat_endpoint(request: RequestState):
             "response": response
         }
 
+    # except Exception as e:
+    #     logger.exception("Error during response generation")
+
+    #     raise HTTPException(
+    #         status_code=500,
+    #         detail=f"AI agent failed: {str(e)}"
+    #     )
     except Exception as e:
-        logger.exception("Error during response generation")
+        import traceback
+
+        logger.error("Error during response generation")
+        traceback.print_exc()
 
         raise HTTPException(
             status_code=500,
-            detail=f"AI agent failed: {str(e)}"
+            detail=str(e)
         )
