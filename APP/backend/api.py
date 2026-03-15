@@ -1,45 +1,21 @@
-from fastapi import FastAPI,HTTPException
-from pydantic import BaseModel
-from typing import List
-from APP.code.agent_ai import get_response_from_ai_agents
-from APP.config.settings import settings
-from APP.common.log import get_logger
-from APP.common.exception import CustomException
+from fastapi import FastAPI, Request
+import traceback
 
-logger = get_logger(__name__)
-
-app = FastAPI(title="MULTI AI AGENT")
-
-class RequestState(BaseModel):
-    model_name:str
-    system_prompt:str
-    messages:List[str]
-    allow_search: bool
+app = FastAPI()
 
 @app.post("/chat")
-def chat_endpoint(request:RequestState):
-    logger.info(f"Received request for model : {request.model_name}")
-
-    if request.model_name not in settings.ALLOWED_MODEL_NAMES:
-        logger.warning("Invalid model name")
-        raise HTTPException(status_code=400 , detail="Invalid model name")
-    
+async def chat(request: Request):
     try:
-        response = get_response_from_ai_agents(
-            request.model_name,
-            request.messages,
-            request.allow_search,
-            request.system_prompt
-        )
+        data = await request.json()
+        message = data.get("message")
 
-        logger.info(f"Sucesfully got response from AI Agent {request.model_name}")
+        print("Incoming message:", message)
 
-        return {"response" : response}
-    
+        response = llm.invoke(message)
+
+        return {"response": str(response)}
+
     except Exception as e:
-        logger.exception("Error during response generation")
-        raise HTTPException(
-            status_code=500,
-            detail=str(e)
-        )
-        
+        print("ERROR OCCURRED")
+        traceback.print_exc()
+        return {"error": str(e)}
