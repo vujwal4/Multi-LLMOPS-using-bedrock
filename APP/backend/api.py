@@ -1,7 +1,14 @@
 from fastapi import FastAPI, Request
 import traceback
+from langchain_aws import ChatBedrock
 
 app = FastAPI()
+
+# Create LLM
+llm = ChatBedrock(
+    model_id="amazon.nova-lite-v1:0",
+    region_name="us-east-1"
+)
 
 @app.post("/chat")
 async def chat(request: Request):
