@@ -19,7 +19,7 @@ class RequestState(BaseModel):
 
 
 @app.post("/chat")
-async def chat_endpoint(request: RequestState):
+def chat_endpoint(request: RequestState):
 
     logger.info(f"Received request for model: {request.model_name}")
 
@@ -40,7 +40,7 @@ async def chat_endpoint(request: RequestState):
 
     try:
         # Call AI Agent
-        response =await get_response_from_ai_agents(
+        response =get_response_from_ai_agents(
             request.model_name,
             request.messages,
             request.allow_search,
