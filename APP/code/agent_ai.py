@@ -9,6 +9,7 @@ def RAG_llm(model_name):
     return ChatBedrock(
         #credentials_profile_name="default",
         model_id=model_name,
+        region = settings.AWS_DEFAULT_REGION ,
         model_kwargs={
             "temperature": 0.3,
             "top_p": 0.9,
