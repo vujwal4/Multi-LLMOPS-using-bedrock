@@ -1,28 +1,63 @@
-from fastapi import FastAPI, Request
-import traceback
-from langchain_aws import ChatBedrock
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+from typing import List, Optional
 
-app = FastAPI()
+from APP.code.agent_ai import get_response_from_ai_agents
+from APP.config.settings import settings
+from APP.common.log import get_logger
 
-# Create LLM
-llm = ChatBedrock(
-    model_id="amazon.nova-lite-v1:0",
-    region_name="us-east-1"
-)
+logger = get_logger(__name__)
+
+app = FastAPI(title="MULTI AI AGENT")
+
+
+class RequestState(BaseModel):
+    model_name: Optional[str] = "amazon.nova-lite-v1:0"
+    system_prompt: Optional[str] = "You are a helpful AI assistant."
+    messages: List[str]
+    allow_search: Optional[bool] = False
+
 
 @app.post("/chat")
-async def chat(request: Request):
+def chat_endpoint(request: RequestState):
+
+    logger.info(f"Received request for model: {request.model_name}")
+
+    # Validate model name
+    if request.model_name not in settings.ALLOWED_MODEL_NAMES:
+        logger.warning("Invalid model name")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid model name. Allowed models: {settings.ALLOWED_MODEL_NAMES}"
+        )
+
+    # Validate messages
+    if not request.messages:
+        raise HTTPException(
+            status_code=400,
+            detail="Messages list cannot be empty"
+        )
+
     try:
-        data = await request.json()
-        message = data.get("message")
+        # Call AI Agent
+        response = get_response_from_ai_agents(
+            request.model_name,
+            request.messages,
+            request.allow_search,
+            request.system_prompt
+        )
 
-        print("Incoming message:", message)
+        logger.info(f"Successfully got response from AI Agent {request.model_name}")
 
-        response = llm.invoke(message)
-
-        return {"response": str(response)}
+        return {
+            "status": "success",
+            "response": response
+        }
 
     except Exception as e:
-        print("ERROR OCCURRED")
-        traceback.print_exc()
-        return {"error": str(e)}
+        logger.exception("Error during response generation")
+
+        raise HTTPException(
+            status_code=500,
+            detail=f"AI agent failed: {str(e)}"
+        )
