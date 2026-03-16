@@ -54,21 +54,21 @@ pipeline{
             }
         }
 
-    //     stage('Deploy to ECS Fargate') {
-    // steps {
-    //     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWSC']]) {
-    //         script {
-    //             sh """
-    //             aws ecs update-service \
-    //               --cluster llmops-pro-cluster \
-    //               --service llmops-pro-task-service-r8n1ocim  \
-    //               --force-new-deployment \
-    //               --region ${AWS_REGION}
-    //             """
-    //             }
-    //         }
-    //     }
-    //  }
+        stage('Deploy to ECS Fargate') {
+    steps {
+        withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWSC']]) {
+            script {
+                sh """
+                aws ecs update-service \
+                  --cluster llm-clu-ster \
+                  --service l-l-m-service-mhklfu51  \
+                  --force-new-deployment \
+                  --region ${AWS_REGION}
+                """
+                }
+            }
+        }
+     }
         
     }
 }
