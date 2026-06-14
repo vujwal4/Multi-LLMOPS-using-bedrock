@@ -61,7 +61,7 @@ pipeline{
                 sh """
                 aws ecs update-service \
                   --cluster llm-clu-ster \
-                  --service l-l-m-service-mhklfu51  \
+                  --service l-l-m-service-it3te9m5  \
                   --force-new-deployment \
                   --region ${AWS_REGION}
                 """
